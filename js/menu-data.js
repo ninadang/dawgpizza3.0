@@ -4,8 +4,8 @@
 $(function(){
 	//console.log("ready!");
 	pizzaRender(com.dawgpizza.menu.pizzas);
-	drRender(com.dawgpizza.menu.drinks);
-	deRender(com.dawgpizza.menu.desserts);
+	dRender(com.dawgpizza.menu.drinks, '.drinks', 'dr');
+	dRender(com.dawgpizza.menu.desserts, '.desserts', 'de');
 }); //on ready function
 
 
@@ -18,19 +18,9 @@ function pizzaRender(entries){
 	    instance = template.clone();
 	   	instance.find('.name').html(this.name);
 	    instance.find('.desc').html(this.description);
-
-	    var idx;
-	    for(idx = 0; idx < this.prices.length; ++idx){
-	    	var price = this.prices[idx]; //0, 1, 2
-	    	if(idx == 0){
-	    		instance.find('.pizza-s').html(price);
-	    	}else if(idx == 1){
-	    		instance.find('.pizza-m').html(price);
-	    	}else{
-	    		instance.find('.pizza-l').html(price);
-	    	}
-	    }
-	    
+	    instance.find('.pizza-s').html(this.prices[0]);
+	    instance.find('.pizza-m').html(this.prices[1]);
+	    instance.find('.pizza-l').html(this.prices[2]);
 	    instance.removeClass('template');
         food.append(instance);
 
@@ -38,35 +28,19 @@ function pizzaRender(entries){
 }
 
 
-function drRender(entries){
+function dRender(entries, type, suffix){
 	var instance;
-	var template = $('.drinks');
-	var food = $('.food-dr');
+	var template = $(type);
+	var food = $('.food-' + suffix);
 	$.each(entries, function(){
 	    instance = template.clone();
-	   	instance.find('.name-dr').html(this.name);
-	    instance.find('.price-dr').html(this.price);
+	   	instance.find('.name-' + suffix).html(this.name);
+	    instance.find('.price-' + suffix).html(this.price);
 	    
 	    instance.removeClass('template');
         food.append(instance);
 
 	}); //for each drink, input name and price
-	
-}
-
-function deRender(entries){
-	var instance;
-	var template = $('.desserts');
-	var food = $('.food-de');
-	$.each(entries, function(){
-	    instance = template.clone();
-	   	instance.find('.name-de').html(this.name);
-	    instance.find('.price-de').html(this.price);
-	    
-	    instance.removeClass('template');
-        food.append(instance);
-
-	}); //for each dessert, input name and price
 	
 }
 
